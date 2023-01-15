@@ -1,0 +1,48 @@
+<ng-container *ngIf="{pokemon: pokemon$ | async} as state">
+  <ng-container *ngIf="state.pokemon; else emptyTemplate">
+    <div id="cards " class="py-4 flex justify-center items-center">
+      <figure class="card " [ngClass]="{
+          'card--grass': state?.pokemon?.types[0]?.type?.name === 'grass',
+          'card--fire': state?.pokemon?.types[0]?.type?.name === 'fire',
+          'card--normal': state?.pokemon?.types[0]?.type?.name === 'normal',
+          'card--water': state?.pokemon?.types[0]?.type?.name === 'water',
+          'card--electric': state?.pokemon?.types[0]?.type?.name === 'electric',
+          'card--psychic': state?.pokemon?.types[0]?.type?.name === 'psychic',
+          'card--dark': state?.pokemon?.types[0]?.type?.name === 'dark',
+          'card--ice': state?.pokemon?.types[0]?.type?.name === 'ice',
+          'card--poison': state?.pokemon?.types[0]?.type?.name === 'poison',
+          'card--ground': state?.pokemon?.types[0]?.type?.name === 'ground',
+          'card--bug': state?.pokemon?.types[0]?.type?.name === 'bug'
+        }">
+        <div class="card__image-container">
+          <img [src]="state.pokemon?.sprites?.front_default" [alt]="state?.pokemon?.name" class="card__image">
+        </div>
+        <figcaption class="card__caption">
+          <h1 class="card__name">{{state?.pokemon?.name.toUpperCase() }}</h1>
+          <h3 class="card__type">
+            {{state.pokemon?.types[0]?.type?.name}}
+          </h3>
+          <table class="card__stats">
+            <tbody>
+              <tr *ngFor=" let stat of state.pokemon?.stats">
+                <th>{{stat.stat.name}}</th>
+                <td>{{stat.base_stat}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="card__abilities">
+            <h4 class="card__ability" *ngFor=" let data of state.pokemon?.abilities">
+              <span class="card__label">{{data.is_hidden ? 'Ability' :'Hidden Ability'}}</span>
+              {{data.ability.name}}
+            </h4>
+          </div>
+        </figcaption>
+      </figure>
+    </div>
+  </ng-container>
+  <ng-template #emptyTemplate>
+    <div class="flex justify-center items-center ">
+      <h1 class="text-center">Seleccione un pokemon para ver detalles</h1>
+    </div>
+  </ng-template>
+</ng-container>
